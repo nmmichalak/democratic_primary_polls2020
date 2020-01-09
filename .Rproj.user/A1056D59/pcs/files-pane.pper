@@ -1,0 +1,9 @@
+{
+    "path" : "~/Desktop/democratic_primary_polls2020",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

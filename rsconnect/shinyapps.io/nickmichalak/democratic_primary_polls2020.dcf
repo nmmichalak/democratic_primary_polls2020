@@ -1,0 +1,10 @@
+name: democratic_primary_polls2020
+title:
+username:
+account: nickmichalak
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1364756
+bundleId: 2706577
+url: https://nickmichalak.shinyapps.io/democratic_primary_polls2020/
+when: 1578164007.47242
