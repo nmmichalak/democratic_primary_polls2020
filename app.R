@@ -74,20 +74,6 @@ president_primary_polls <- president_primary_polls %>%
   mutate(median_date = median(c(start_date, end_date))) %>% 
   ungroup()
 
-# Convert percentage to proportion
-president_primary_polls$ppt <- president_primary_polls$pct / 100
-
-# Some polls have multiple questions; average questions x candidates within each poll
-president_primary_polls <- president_primary_polls %>% 
-  # no head to head polls; democratic party polls
-  filter(notes != "head-to-head poll" & party == "DEM") %>% 
-  group_by(poll_id, candidate_name) %>% 
-  mutate(ppt.avg = mean(ppt, na.rm = TRUE)) %>% 
-  ungroup()
-
-# Compute median_date as a numeric variables
-president_primary_polls$median_date_dbl <- as.double(president_primary_polls$median_date)
-
 # Create population rank variable
 population_rank <- president_primary_polls %>% 
   count(poll_id, population) %>% 
@@ -99,6 +85,20 @@ population_rank <- president_primary_polls %>%
 # Join with primary poll data
 president_primary_polls <- president_primary_polls %>% 
   full_join(population_rank, by = c("poll_id", "population"))
+
+# Convert percentage to proportion
+president_primary_polls$ppt <- president_primary_polls$pct / 100
+
+# Some polls have multiple questions; average questions x candidates within each population within each poll
+president_primary_polls <- president_primary_polls %>% 
+  # no head to head polls; democratic party polls
+  filter(notes != "head-to-head poll" & party == "DEM") %>% 
+  group_by(poll_id, population, candidate_name) %>% 
+  mutate(ppt.avg = mean(ppt, na.rm = TRUE)) %>% 
+  ungroup()
+
+# Compute median_date as a numeric variables
+president_primary_polls$median_date_dbl <- as.double(president_primary_polls$median_date)
 
 # Save candidates character vector
 candidates <- c("Amy Klobuchar", "Andrew Yang", "Bernard Sanders", "Beto O'Rourke", "Cory A. Booker", "Deval Patrick", "Elizabeth Warren", "Joseph R. Biden Jr.", "Julián Castro", "Kamala D. Harris", "Michael Bloomberg", "Pete Buttigieg", "Tom Steyer", "Tulsi Gabbard")
