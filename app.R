@@ -120,7 +120,7 @@ contrasts(primary_pollavrg_nr$primary_party) <- cbind(republican = c(-0.5, 0.5))
 # Fit model for first half of the primary year (January - June)
 glm.fit1 <- glm(nominee ~ poll_avrg1 * primary_party, family = binomial(link = "logit"), data = primary_pollavrg_nr)
 
-# Fit model for first half of the primary year (January - June)
+# Fit model for second half of the primary year (July - Convention)
 glm.fit2 <- glm(nominee ~ poll_avrg2 * primary_party, family = binomial(link = "logit"), data = primary_pollavrg_nr)
 
 # Define UI
@@ -134,7 +134,7 @@ ui <- fluidPage(
       selectInput(inputId = "state", label = "Select National or a specific State", choices = sort(unique(president_primary_polls$state)), selected = "National"),
       
       # Input Candidates
-      selectInput(inputId = "candidates", label = "Select Candidates", choices = candidates, selected = c("Bernard Sanders", "Elizabeth Warren", "Joseph R. Biden Jr.", "Pete Buttigieg"), multiple = TRUE),
+      selectInput(inputId = "candidates", label = "Select Candidates", choices = candidates, selected = c("Bernard Sanders", "Joseph R. Biden Jr."), multiple = TRUE),
       
       # Input FiveThirtyEight Grade
       selectInput(inputId = "pollgrade538", label = "Select FiveThirtyEight Poll Grade(s)", choices = levels(polls$fte_grade), selected = levels(polls$fte_grade), multiple = TRUE),
